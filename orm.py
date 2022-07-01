@@ -84,5 +84,38 @@
 # Product.objects.all()[5:15]
 
 # INSERT
+# INSERT INTO product (...) VALUES (...)
+# Product.objects.create(name='...', description='...', ...)
+
+# product = Product(name='...', description='...', ...)
+# product.save()
+
+# INSERT INTO product (...) VALUES (...), (...);
+# Product.object.bulk_create([Product(...), Product(...)])
+
 # UPDATE
+
+# UPDATE product SET price = 1000;
+# Product.objects.update(price=1000)
+
+# UPDATE product SET price = 1000 WHERE category_id = 'notebooks'
+# Product.objects.filter(category_id='notebooks').update(price=1000)
+
 # DELETE
+
+# DELETE FROM product
+# Product.objects.delete()
+
+# DELETE FROM product WHERE category_id = 'notebooks'
+# Product.objects.filter(category_id='notebooks').delete()
+
+# получить один объект
+# Category.objects.get(slug='tv')
+# Product.objects.get(id=2)
+
+
+# quantity
+# SELECT COUNT(*) FROM product
+# Product.object.count()
+# SELECT COUNT(*) FROM product WHERE price < 1000
+# Product.object.filter(price__lt=1000).count()

@@ -9,7 +9,6 @@ class Category(models.Model):
         return self.name
 
 
-# Create your models here.
 class Product(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
