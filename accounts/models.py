@@ -1,6 +1,9 @@
+import email
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
-
+from django.utils.crypto import get_random_string
+from django.core.mail import send_mail
+from django.conf import settings
 
 class UserManager(BaseUserManager):
     def _create(self, email, password, name, **fields):
@@ -41,3 +44,16 @@ class User(AbstractBaseUser):
 
     def has_perm(self, obj=None):
         return self.is_staff
+
+    def create_acivation_code(self):
+        code = get_random_string(20)
+        self.activation_code = code
+        return code
+    
+    def sent_activation_code(self):
+        activation_link = f'http://localhost:8000/account/activate/{self.activation_code}'
+        send_mail(subject='Activation', 
+                  message=activation_link, 
+                  from_email=settings.EMAIL_HOST_USER,
+                  recipient_list=[self.email],
+                  fail_silently=False)

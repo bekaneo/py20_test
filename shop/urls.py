@@ -21,15 +21,8 @@ from products.views import (ProductsListView, ProductDetailsView, ProductViewSet
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('products/', ProductViewSet.as_view(
-        {'post': 'create', 'get': 'list'}
-    )),
-    path('products/<int:pk>/', ProductViewSet.as_view(
-        {'get': 'retrieve',
-         'put': 'update',
-         'patch': 'partial_update',
-         'delete': 'destroy'}
-    )),
+    path('products/', include('products.urls')), 
+    # products/ 
     path('__debug__/', include('debug_toolbar.urls'))
 ]
 
