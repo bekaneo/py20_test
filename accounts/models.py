@@ -5,6 +5,7 @@ from django.utils.crypto import get_random_string
 from django.core.mail import send_mail
 from django.conf import settings
 
+
 class UserManager(BaseUserManager):
     def _create(self, email, password, name, **fields):
         email = self.normalize_email(email)
@@ -45,15 +46,17 @@ class User(AbstractBaseUser):
     def has_perm(self, obj=None):
         return self.is_staff
 
-    def create_acivation_code(self):
+    def create_activation_code(self):
         code = get_random_string(20)
         self.activation_code = code
+        self.save()
         return code
-    
-    def sent_activation_code(self):
-        activation_link = f'http://localhost:8000/account/activate/{self.activation_code}'
-        send_mail(subject='Activation', 
-                  message=activation_link, 
+
+    def send_activation_code(self):
+        activation_link = f'http://localhost:8000/account/activation/' \
+                          f'{self.activation_code}'
+        send_mail(subject='Activation',
+                  message=activation_link,
                   from_email=settings.EMAIL_HOST_USER,
                   recipient_list=[self.email],
                   fail_silently=False)

@@ -7,6 +7,8 @@ from rest_framework.generics import (ListAPIView, CreateAPIView,
 
 from rest_framework.viewsets import ModelViewSet
 from products.filters import ProductPriceFilter
+
+
 # @api_view(['GET'])
 # def products_list(request):
 #     products = Product.objects.all()
@@ -61,6 +63,7 @@ class ProductViewSet(ModelViewSet):
     queryset = Product.objects.all().order_by('id')
     serializer_class = ProductSerializer
     filterset_class = ProductPriceFilter
+
     def get_serializer_class(self):
         if self.action == 'list':
             return ProductListSerializer
