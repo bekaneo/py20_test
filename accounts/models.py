@@ -31,7 +31,7 @@ class User(AbstractBaseUser):
     last_name = models.CharField(max_length=50, blank=True)
     is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
-    activation_code = models.CharField(max_length=20, blank=True)
+    activation_code = models.CharField(max_length=20, blank=True, verbose_name='activation_code')
 
     objects = UserManager()
     USERNAME_FIELD = 'email'

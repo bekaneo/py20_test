@@ -89,6 +89,7 @@ class RestorePasswordCompleteSerializer(serializers.Serializer):
         return super().validate(attrs)
 
     def set_new_password(self):
+        print(self.validated_data)
         email = self.validated_data.get('email')
         password = self.validated_data.get('password')
         user = User.objects.get(email=email)

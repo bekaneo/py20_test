@@ -1,13 +1,8 @@
 from rest_framework import serializers
-from .models import Product
+
+from .models import Product, Comment
 
 
-# class ProductSerializer(serializers.Serializer):
-# name = serializers.CharField()
-# description = serializers.CharField()
-# category = serializers.CharField()
-# price = serializers.DecimalField(max_digits=10, decimal_places=2)
-# image = serializers.ImageField()
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
@@ -18,3 +13,22 @@ class ProductListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = ['id', 'name', 'price', 'image']
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['comments'] = CommentSerializer(instance.comments.all(), many=True).data
+        return representation
+
+
+class CommentSerializer(serializers.ModelSerializer):
+    author = serializers.ReadOnlyField(source='author.email')
+
+    class Meta:
+        model = Comment
+        fields = '__all__'
+
+    def create(self, validated_data):
+        request = self.context.get('request')
+        user = request.user
+        validated_data['author'] = user
+        return super().create(validated_data)
