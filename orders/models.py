@@ -7,7 +7,7 @@ User = get_user_model()
 
 STATUS_CHOICES = (
     ('open', 'open'),
-    ('in_process', 'in_process'),
+    ('in_process', 'in process'),
     ('canceled', 'canceled'),
     ('delivered', 'delivered')
 )

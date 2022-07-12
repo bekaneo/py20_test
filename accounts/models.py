@@ -1,5 +1,3 @@
-import email
-from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.utils.crypto import get_random_string
 from django.core.mail import send_mail
